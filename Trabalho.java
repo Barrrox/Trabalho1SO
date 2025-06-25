@@ -1,20 +1,12 @@
 import java.util.Random;
 import java.lang.Runnable;
 
-class ThreadInterface implements Runnable{
 
-    public void run(){
-        System.out.println("Thread " + Thread.currentThread().getName());
-    }
-}
-
-
-
-
-class Eleitor {
+// A classe Eleitor é a que conterá a Thread
+class Eleitor implements Runnable{
     private Urna urna_eletronica;
-    int total_votos;
-    Random random = new Random();
+    private int total_votos;
+    private Random random = new Random();
 
     // Construtor
     public Eleitor(int _total_votos, Urna urna) {
@@ -23,10 +15,18 @@ class Eleitor {
     }
 
     /*
-     * votacao() simula uma votacao entre os candidatos, 
+     * votacao() foi substituido por run() 
+     * run() é o metodo que executará a thread
+     * 
+     * run() simula uma votacao entre os candidatos, 
      * em que cada voto é aleatoriamente atribuido a um candidato.
     */
-    public void votacao() {
+    @Override // Sobreescreve o metodo run()
+    public void run() {
+
+        String nomeThread = Thread.currentThread().getName();
+        System.out.println(nomeThread + " iniciou a votação...");
+
         for (int i = 0; i < total_votos; i++) {
             int voto = random.nextInt(3);
             if (voto == 2) {
@@ -37,7 +37,11 @@ class Eleitor {
                 urna_eletronica.votaRui();
             }
         }
+
+        System.out.println(nomeThread + " terminou a votação.");
+        
     }
+
 }
 
 
@@ -80,20 +84,21 @@ class Urna {
 /* ------------ Main ------------ */
 public class Trabalho {
     public static void main(String[] args) throws InterruptedException{
-        Thread t1, t2, t3;
-
-        t1 = new Thread(new ThreadInterface());
-        t2 = new Thread(new ThreadInterface());
-        t3 = new Thread(new ThreadInterface());
 
         Urna urna_eletronica = new Urna(0, 0, 0);
-        Eleitor eleitores = new Eleitor(100, urna_eletronica); 
+        Eleitor Eleitor1 = new Eleitor(100, urna_eletronica);
+        Eleitor Eleitor2 = new Eleitor(100, urna_eletronica);
+        Eleitor Eleitor3 = new Eleitor(100, urna_eletronica);
+
+        Thread t1 = new Thread(Eleitor1);
+        Thread t2 = new Thread(Eleitor2);
+        Thread t3 = new Thread(Eleitor3);
+
+        System.out.println("Iniciando votação");
 
         t1.start();
         t2.start();
         t3.start();
-
-        eleitores.votacao();
 
         t1.join();
         t2.join();
