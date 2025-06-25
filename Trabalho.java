@@ -1,4 +1,14 @@
 import java.util.Random;
+import java.lang.Runnable;
+
+class ThreadInterface implements Runnable{
+
+    public void run(){
+        System.out.println("Thread " + Thread.currentThread().getName());
+    }
+}
+
+
 
 
 class Eleitor {
@@ -69,11 +79,25 @@ class Urna {
 
 /* ------------ Main ------------ */
 public class Trabalho {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException{
+        Thread t1, t2, t3;
+
+        t1 = new Thread(new ThreadInterface());
+        t2 = new Thread(new ThreadInterface());
+        t3 = new Thread(new ThreadInterface());
+
         Urna urna_eletronica = new Urna(0, 0, 0);
         Eleitor eleitores = new Eleitor(100, urna_eletronica); 
 
+        t1.start();
+        t2.start();
+        t3.start();
+
         eleitores.votacao();
+
+        t1.join();
+        t2.join();
+        t3.join();
 
         // Verificação da fraudabilidade da urna eletrônica
         int votos_totais = urna_eletronica.apuracao();
