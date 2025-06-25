@@ -2,6 +2,7 @@ import java.util.Random;
 import java.lang.Runnable;
 
 
+
 // A classe Eleitor é a que conterá a Thread
 class Eleitor implements Runnable{
     private Urna urna_eletronica;
@@ -85,10 +86,12 @@ class Urna {
 public class Trabalho {
     public static void main(String[] args) throws InterruptedException{
 
+        int total_votos_esperado = 1000;
+
         Urna urna_eletronica = new Urna(0, 0, 0);
-        Eleitor Eleitor1 = new Eleitor(100, urna_eletronica);
-        Eleitor Eleitor2 = new Eleitor(100, urna_eletronica);
-        Eleitor Eleitor3 = new Eleitor(100, urna_eletronica);
+        Eleitor Eleitor1 = new Eleitor(total_votos_esperado, urna_eletronica);
+        Eleitor Eleitor2 = new Eleitor(total_votos_esperado, urna_eletronica);
+        Eleitor Eleitor3 = new Eleitor(total_votos_esperado, urna_eletronica);
 
         Thread t1 = new Thread(Eleitor1);
         Thread t2 = new Thread(Eleitor2);
@@ -106,7 +109,9 @@ public class Trabalho {
 
         // Verificação da fraudabilidade da urna eletrônica
         int votos_totais = urna_eletronica.apuracao();
-        if (votos_totais == 100) {
+        System.out.println("Total de votos esperado: " + 3*total_votos_esperado);
+        System.out.println("Total de votos obtido: " + votos_totais);
+        if (votos_totais == 3*total_votos_esperado) {
             System.out.println("Votação encerrada com sucesso!");
         } else {
             System.out.println("Foi confirmada a Fraude!"); // ladroes
