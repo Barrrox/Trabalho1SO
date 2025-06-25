@@ -1,13 +1,10 @@
 import java.util.Random;
-import java.lang.Runnable;
 
 
-
-// A classe Eleitor é a que conterá a Thread
-class Eleitor implements Runnable{
+class Eleitor {
     private Urna urna_eletronica;
-    private int total_votos;
-    private Random random = new Random();
+    int total_votos;
+    Random random = new Random();
 
     // Construtor
     public Eleitor(int _total_votos, Urna urna) {
@@ -16,18 +13,10 @@ class Eleitor implements Runnable{
     }
 
     /*
-     * votacao() foi substituido por run() 
-     * run() é o metodo que executará a thread
-     * 
-     * run() simula uma votacao entre os candidatos, 
+     * votacao() simula uma votacao entre os candidatos, 
      * em que cada voto é aleatoriamente atribuido a um candidato.
     */
-    @Override // Sobreescreve o metodo run()
-    public void run() {
-
-        String nomeThread = Thread.currentThread().getName();
-        System.out.println(nomeThread + " iniciou a votação...");
-
+    public void votacao() {
         for (int i = 0; i < total_votos; i++) {
             int voto = random.nextInt(3);
             if (voto == 2) {
@@ -38,11 +27,7 @@ class Eleitor implements Runnable{
                 urna_eletronica.votaRui();
             }
         }
-
-        System.out.println(nomeThread + " terminou a votação.");
-        
     }
-
 }
 
 
@@ -84,34 +69,15 @@ class Urna {
 
 /* ------------ Main ------------ */
 public class Trabalho {
-    public static void main(String[] args) throws InterruptedException{
-
-        int total_votos_esperado = 1000;
-
+    public static void main(String[] args) {
         Urna urna_eletronica = new Urna(0, 0, 0);
-        Eleitor Eleitor1 = new Eleitor(total_votos_esperado, urna_eletronica);
-        Eleitor Eleitor2 = new Eleitor(total_votos_esperado, urna_eletronica);
-        Eleitor Eleitor3 = new Eleitor(total_votos_esperado, urna_eletronica);
+        Eleitor eleitores = new Eleitor(100, urna_eletronica); 
 
-        Thread t1 = new Thread(Eleitor1);
-        Thread t2 = new Thread(Eleitor2);
-        Thread t3 = new Thread(Eleitor3);
-
-        System.out.println("Iniciando votação");
-
-        t1.start();
-        t2.start();
-        t3.start();
-
-        t1.join();
-        t2.join();
-        t3.join();
+        eleitores.votacao();
 
         // Verificação da fraudabilidade da urna eletrônica
         int votos_totais = urna_eletronica.apuracao();
-        System.out.println("Total de votos esperado: " + 3*total_votos_esperado);
-        System.out.println("Total de votos obtido: " + votos_totais);
-        if (votos_totais == 3*total_votos_esperado) {
+        if (votos_totais == 100) {
             System.out.println("Votação encerrada com sucesso!");
         } else {
             System.out.println("Foi confirmada a Fraude!"); // ladroes
