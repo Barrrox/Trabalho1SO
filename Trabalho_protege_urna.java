@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 import java.lang.Runnable;
 
 
@@ -22,25 +23,37 @@ class Eleitor implements Runnable{
      * run() simula uma votacao entre os candidatos, 
      * em que cada voto é aleatoriamente atribuido a um candidato.
     */
-    @Override // Sobreescreve o metodo run()
+    @Override
     public void run() {
-
         String nomeThread = Thread.currentThread().getName();
         System.out.println(nomeThread + " iniciou a votação...");
 
         for (int i = 0; i < total_votos; i++) {
             int voto = random.nextInt(3);
-            if (voto == 2) {
-                urna_eletronica.votaKelmon();
-            } else if (voto == 1) {
-                urna_eletronica.votaMarcio();
-            } else {
-                urna_eletronica.votaRui();
+            
+            try {
+                // Adquire a permissão ANTES de modificar a urna
+                urna_eletronica.semaforo.acquire();
+
+                // --- Seção Crítica ---
+                if (voto == 2) {
+                    urna_eletronica.votaKelmon();
+                } else if (voto == 1) {
+                    urna_eletronica.votaMarcio();
+                } else {
+                    urna_eletronica.votaRui();
+                }
+                // --- Fim da Seção Crítica ---
+
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                // Libera a permissão DEPOIS de modificar, para outra thread poder usar.
+                // O bloco finally garante que a liberação ocorrerá mesmo se uma exceção acontecer.
+                urna_eletronica.semaforo.release();
             }
         }
-
         System.out.println(nomeThread + " terminou a votação.");
-        
     }
 
 }
@@ -51,6 +64,7 @@ class Urna {
     int padreKelmon = 0;
     int Marcio = 0;
     int RuiCosta = 0;
+    Semaphore semaforo = new Semaphore(1);
 
     // Construtor
     public Urna(int _padreKelmon, int _Marcio, int _RuiCosta) {
@@ -83,10 +97,10 @@ class Urna {
 
 
 /* ------------ Main ------------ */
-public class Trabalho {
+public class Trabalho_protege_urna {
     public static void main(String[] args) throws InterruptedException{
 
-        int total_votos_esperado = 1000;
+        int total_votos_esperado = 1000000;
 
         Urna urna_eletronica = new Urna(0, 0, 0);
         Eleitor Eleitor1 = new Eleitor(total_votos_esperado, urna_eletronica);
