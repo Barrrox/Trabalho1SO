@@ -86,12 +86,12 @@ class Urna {
 public class Trabalho_sem_proteção {
     public static void main(String[] args) throws InterruptedException{
 
-        int total_votos_esperado = 1000;
+        int total_votos_urna = 1000; // Total de votos por Urna
 
         Urna urna_eletronica = new Urna(0, 0, 0);
-        Eleitor Eleitor1 = new Eleitor(total_votos_esperado, urna_eletronica);
-        Eleitor Eleitor2 = new Eleitor(total_votos_esperado, urna_eletronica);
-        Eleitor Eleitor3 = new Eleitor(total_votos_esperado, urna_eletronica);
+        Eleitor Eleitor1 = new Eleitor(total_votos_urna, urna_eletronica);
+        Eleitor Eleitor2 = new Eleitor(total_votos_urna, urna_eletronica);
+        Eleitor Eleitor3 = new Eleitor(total_votos_urna, urna_eletronica);
 
         Thread t1 = new Thread(Eleitor1);
         Thread t2 = new Thread(Eleitor2);
@@ -109,9 +109,9 @@ public class Trabalho_sem_proteção {
 
         // Verificação da fraudabilidade da urna eletrônica
         int votos_totais = urna_eletronica.apuracao();
-        System.out.println("Total de votos esperado: " + 3*total_votos_esperado);
+        System.out.println("Total de votos esperado: " + 3*total_votos_urna);
         System.out.println("Total de votos obtido: " + votos_totais);
-        if (votos_totais == 3*total_votos_esperado) {
+        if (votos_totais == 3*total_votos_urna) {
             System.out.println("Votação encerrada com sucesso!");
         } else {
             System.out.println("Foi confirmada a Fraude!"); // ladroes
