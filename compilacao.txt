@@ -1,0 +1,22 @@
+
+compilar tudo:
+
+javac ./Trabalho_protege_contador.java -d Trabalho_protege_contador/; javac ./Trabalho_protege_urna.java -d Trabalho_protege_urna/; javac ./Trabalho_sem_proteção.java -d Trabalho_sem_proteção/; javac ./Trabalho_sequencial.java -d Trabalho_sequencial/ 
+
+executar tudo:
+
+cd Trabalho_protege_contador; 
+time java Trabalho_protege_contador;
+cd ..;
+
+cd Trabalho_protege_urna;
+time java Trabalho_protege_urna; 
+cd ..;
+
+cd Trabalho_sem_proteção;
+time java Trabalho_sem_proteção; 
+cd ..;
+
+cd Trabalho_sequencial;
+time java Trabalho_sequencial
+cd ..;
