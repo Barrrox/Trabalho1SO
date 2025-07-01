@@ -100,7 +100,7 @@ class Urna {
 public class Trabalho_protege_urna {
     public static void main(String[] args) throws InterruptedException{
 
-        int total_votos_esperado = 1000000;
+        int total_votos_esperado = 20000000;
 
         Urna urna_eletronica = new Urna(0, 0, 0);
         Eleitor Eleitor1 = new Eleitor(total_votos_esperado, urna_eletronica);

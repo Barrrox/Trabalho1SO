@@ -70,14 +70,20 @@ class Urna {
 /* ------------ Main ------------ */
 public class Trabalho_sequencial {
     public static void main(String[] args) {
+
+        // O total de votos aqui é 3 vezes mais o dos outros arquivos para igualar 
+        // o número de votos entre os arquivos
+        int total_votos = 60000000; 
+
+
         Urna urna_eletronica = new Urna(0, 0, 0);
-        Eleitor eleitores = new Eleitor(100, urna_eletronica); 
+        Eleitor eleitores = new Eleitor(total_votos, urna_eletronica); 
 
         eleitores.votacao();
 
         // Verificação da fraudabilidade da urna eletrônica
         int votos_totais = urna_eletronica.apuracao();
-        if (votos_totais == 100) {
+        if (votos_totais == total_votos) {
             System.out.println("Votação encerrada com sucesso!");
         } else {
             System.out.println("Foi confirmada a Fraude!"); // ladroes
