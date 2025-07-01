@@ -1,11 +1,11 @@
-# Trabalho 1 SO
+# Trabalho 1 - Sistamas Operacionais
 
 Autores: Andre Gustavo, Matheus Barros, Paulo Roberto Bomfim
 
-# Ideia que o Marcio passou:
+# Ideia:
 
-Explorar numero de eleitores
+Explorar a condição de corrida no contador de votos de canditados em uma eleição onde eleitores são threads
 
-Como implmentar a proteção: ha 2 formas 
+Como implmentar a proteção: há 2 formas 
  1. proteger a urna
  2. proteger o contador do candidato
