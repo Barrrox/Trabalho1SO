@@ -1,3 +1,7 @@
+// Compilação
+// javac ./Trabalho_protege_contador.java -d Trabalho_protege_contador/;
+
+
 import java.util.Random;
 import java.lang.Runnable;
 

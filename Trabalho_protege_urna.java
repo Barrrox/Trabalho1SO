@@ -1,3 +1,6 @@
+// Compilação
+// javac ./Trabalho_protege_urna.java -d Trabalho_protege_urna/;
+
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.lang.Runnable;

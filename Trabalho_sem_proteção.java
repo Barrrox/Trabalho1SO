@@ -1,3 +1,7 @@
+// Compilação
+// javac ./Trabalho_sem_proteção.java -d Trabalho_sem_proteção/;
+
+
 import java.util.Random;
 import java.lang.Runnable;
 

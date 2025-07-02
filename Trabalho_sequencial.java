@@ -1,3 +1,6 @@
+// Compilação
+// javac ./Trabalho_sequencial.java -d Trabalho_sequencial/;
+
 import java.util.Random;
 
 
