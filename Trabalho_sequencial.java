@@ -83,6 +83,8 @@ public class Trabalho_sequencial {
 
         // Verificação da fraudabilidade da urna eletrônica
         int votos_totais = urna_eletronica.apuracao();
+        System.out.println("Total de votos esperado: " + total_votos);
+        System.out.println("Total de votos obtido: " + votos_totais);
         if (votos_totais == total_votos) {
             System.out.println("Votação encerrada com sucesso!");
         } else {
