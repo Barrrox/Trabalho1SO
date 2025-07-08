@@ -34,6 +34,10 @@ class Eleitor {
 }
 
 
+
+
+
+
 class Urna {
     // Contadores de votos
     int padreKelmon = 0;
